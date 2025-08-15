@@ -1,0 +1,29 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos temporales
+*.tmp
+*.temp
+*.log
+
+# Archivos de respaldo
+*.bak
+*.backup
+*~
+
+# Archivos de desarrollo
+node_modules/
+.env
+.env.local
+
+# Archivos de compresión
+*.zip
+*.rar
+*.7z
+
+# Archivos de documentación temporal
+EMAIL_TEMPLATE.md
+INSTRUCCIONES_COMPARTIR.md
+preparar_para_compartir.bat

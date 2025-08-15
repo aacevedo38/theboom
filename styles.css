@@ -1,0 +1,434 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+header p {
+    font-size: 1.2rem;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.mind-map-container {
+    position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.mind-map {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 800px;
+}
+
+/* Nodo central */
+.central-node {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    padding: 30px;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+    z-index: 10;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 60px;
+}
+
+.central-node:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+}
+
+.central-node h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.central-node p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Contenedor de ramas */
+.branches-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Ramas principales */
+.branch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Líneas conectoras desde el nodo central */
+.branch::before {
+    content: '';
+    position: absolute;
+    background: linear-gradient(45deg, #ddd, #999);
+    width: 2px;
+    height: 40px;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Nodos de rama */
+.node {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 180px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.node:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(78, 205, 196, 0.6);
+}
+
+.node h4 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+
+.node p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+/* Sub-ramas */
+.sub-branches {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    position: relative;
+}
+
+.sub-branches::before {
+    content: '';
+    position: absolute;
+    background: linear-gradient(45deg, #ddd, #999);
+    width: 2px;
+    height: 20px;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sub-node {
+    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(168, 237, 234, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.sub-node:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(168, 237, 234, 0.5);
+}
+
+.sub-node h5 {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.sub-node p {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+/* Panel de información */
+.info-panel {
+    position: fixed;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    width: 350px;
+    max-height: 500px;
+    overflow: hidden;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-50%) translateX(100%);
+}
+
+.info-panel.active {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+.info-header {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.info-content {
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.info-content p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.info-content h4 {
+    margin: 20px 0 10px 0;
+    color: #2c3e50;
+}
+
+.info-content ul {
+    margin-left: 20px;
+}
+
+.info-content li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+/* Controles */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.branch {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.branch:nth-child(1) { animation-delay: 0.1s; }
+.branch:nth-child(2) { animation-delay: 0.2s; }
+.branch:nth-child(3) { animation-delay: 0.3s; }
+.branch:nth-child(4) { animation-delay: 0.4s; }
+.branch:nth-child(5) { animation-delay: 0.5s; }
+.branch:nth-child(6) { animation-delay: 0.6s; }
+
+.central-node {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .branches-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .mind-map-container {
+        padding: 20px;
+    }
+    
+    .node {
+        width: 160px;
+        padding: 15px;
+    }
+    
+    .sub-node {
+        width: 130px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .branches-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .mind-map-container {
+        padding: 15px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .info-panel {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+    }
+    
+    .central-node {
+        width: 150px;
+        height: 150px;
+        padding: 20px;
+    }
+    
+    .central-node h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Estados activos */
+.node.active,
+.sub-node.active {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(78, 205, 196, 0.8);
+}
+
+.central-node.active {
+    transform: scale(1.1);
+    box-shadow: 0 20px 50px rgba(255, 107, 107, 0.8);
+}
+
+/* Mejoras visuales adicionales */
+.branch:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Líneas conectoras más visibles */
+.branch::before,
+.sub-branches::before {
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* Separación visual entre ramas */
+.branch + .branch {
+    margin-top: 10px;
+}
