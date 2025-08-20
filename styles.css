@@ -93,10 +93,10 @@ header p {
 /* Contenedor de ramas */
 .branches-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 40px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
 }
 
 /* Ramas principales */
@@ -201,6 +201,69 @@ header p {
 .sub-node p {
     font-size: 0.75rem;
     opacity: 0.8;
+}
+
+/* Estilo especial para IA Generativa */
+.node[data-category="generative_ai"] {
+    background: linear-gradient(135deg, #ff9a56, #ff6b9d);
+    box-shadow: 0 8px 25px rgba(255, 154, 86, 0.4);
+}
+
+.node[data-category="generative_ai"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 35px rgba(255, 154, 86, 0.6);
+}
+
+/* Sub-ramas de IA Generativa */
+.generative-sub-branches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 154, 86, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 154, 86, 0.2);
+}
+
+.generative-sub-node {
+    background: linear-gradient(135deg, #ff9a56, #ff6b9d);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    width: 80px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(255, 154, 86, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.8rem;
+}
+
+.generative-sub-node:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 154, 86, 0.5);
+}
+
+.generative-sub-node h6 {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.generative-sub-node p {
+    font-size: 0.65rem;
+    opacity: 0.9;
+    line-height: 1.2;
+}
+
+.sub-node[data-category="text-generation"],
+.sub-node[data-category="image-generation"],
+.sub-node[data-category="audio-generation"],
+.sub-node[data-category="video-generation"],
+.sub-node[data-category="code-generation"] {
+    border-left: 4px solid #ff9a56;
+    background: linear-gradient(135deg, rgba(255, 154, 86, 0.1), rgba(255, 107, 157, 0.1));
 }
 
 /* Panel de información */

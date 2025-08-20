@@ -70,6 +70,16 @@ const conceptInfo = {
             "• Responsabilidad: Quién es responsable de las acciones de la IA"
         ]
     },
+    generative_ai: {
+        title: "IA Generativa",
+        description: "La IA Generativa es una rama de la inteligencia artificial que se enfoca en crear contenido nuevo y original, como texto, imágenes, audio, video y código, basándose en patrones aprendidos de grandes conjuntos de datos.",
+        details: [
+            "• Generación de Contenido: Creación de texto, imágenes, audio y video originales",
+            "• Modelos de Lenguaje: GPT, Claude, LLaMA para generación de texto",
+            "• Generación de Imágenes: DALL-E, Midjourney, Stable Diffusion",
+            "• Aplicaciones: Creación de contenido, diseño, programación, entretenimiento"
+        ]
+    },
     // Sub-conceptos de Machine Learning
     supervised: {
         title: "Machine Learning Supervisado",
@@ -161,6 +171,57 @@ const conceptInfo = {
             "• Generación de Respuestas: Creación de respuestas contextualmente apropiadas",
             "• Integración: Conexión con bases de datos y sistemas externos",
             "• Aplicaciones: Atención al cliente, soporte técnico, asistentes personales"
+        ]
+    },
+    // Sub-conceptos de IA Generativa
+    "text-generation": {
+        title: "Generación de Texto con IA",
+        description: "La generación de texto utiliza modelos de lenguaje grandes para crear contenido escrito coherente y contextualmente apropiado.",
+        details: [
+            "• Modelos de Lenguaje: GPT-4, Claude, LLaMA, PaLM",
+            "• Aplicaciones: Escritura creativa, redacción de documentos, chatbots",
+            "• Capacidades: Completar texto, responder preguntas, generar historias",
+            "• Herramientas: ChatGPT, Claude, Bard, Hugging Face"
+        ]
+    },
+    "image-generation": {
+        title: "Generación de Imágenes con IA",
+        description: "La generación de imágenes crea visualizaciones únicas basándose en descripciones textuales o imágenes de referencia.",
+        details: [
+            "• Modelos: DALL-E 3, Midjourney v6, Stable Diffusion XL",
+            "• Técnicas: Difusión, GANs, Transformers",
+            "• Aplicaciones: Diseño gráfico, arte digital, marketing, entretenimiento",
+            "• Control: Prompts textuales, edición de imágenes, variaciones"
+        ]
+    },
+    "audio-generation": {
+        title: "Generación de Audio con IA",
+        description: "La generación de audio incluye la creación de voz, música y efectos de sonido utilizando inteligencia artificial.",
+        details: [
+            "• Síntesis de Voz: Text-to-Speech natural y expresivo",
+            "• Generación Musical: Composición automática de melodías y ritmos",
+            "• Herramientas: Whisper, MusicLM, ElevenLabs, Suno",
+            "• Aplicaciones: Asistentes virtuales, producción musical, podcasts"
+        ]
+    },
+    "video-generation": {
+        title: "Generación de Video con IA",
+        description: "La generación de video crea clips y animaciones basándose en texto, imágenes o videos de referencia.",
+        details: [
+            "• Modelos: Runway Gen-3, Pika Labs, Sora, Stable Video",
+            "• Técnicas: Difusión temporal, interpolación de frames",
+            "• Aplicaciones: Marketing, entretenimiento, educación, publicidad",
+            "• Duración: Desde segundos hasta minutos de contenido generado"
+        ]
+    },
+    "code-generation": {
+        title: "Generación de Código con IA",
+        description: "La generación de código automatiza la creación de programas y scripts utilizando inteligencia artificial.",
+        details: [
+            "• Herramientas: GitHub Copilot, Amazon CodeWhisperer, Tabnine",
+            "• Funcionalidades: Autocompletado, generación de funciones, debugging",
+            "• Lenguajes: Python, JavaScript, Java, C++, y muchos más",
+            "• Aplicaciones: Desarrollo de software, scripting, automatización"
         ]
     },
     // Sub-conceptos de Computer Vision
@@ -282,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Configurar event listeners
 function initializeEventListeners() {
     // Event listeners para nodos
-    document.querySelectorAll('.node, .sub-node').forEach(node => {
+    document.querySelectorAll('.node, .sub-node, .generative-sub-node').forEach(node => {
         node.addEventListener('click', handleNodeClick);
         node.addEventListener('mouseenter', handleNodeHover);
         node.addEventListener('mouseleave', handleNodeLeave);
@@ -326,7 +387,13 @@ function handleNodeClick(e) {
 function handleNodeHover(e) {
     const node = e.currentTarget;
     if (animationsEnabled) {
-        node.style.transform = node.classList.contains('central-node') ? 'scale(1.1)' : 'translateY(-8px)';
+        if (node.classList.contains('central-node')) {
+            node.style.transform = 'scale(1.1)';
+        } else if (node.classList.contains('generative-sub-node')) {
+            node.style.transform = 'translateY(-3px) scale(1.05)';
+        } else {
+            node.style.transform = 'translateY(-8px)';
+        }
     }
 }
 
@@ -394,6 +461,8 @@ function highlightActiveNode(node) {
     
     if (node.classList.contains('central-node')) {
         node.style.transform = 'scale(1.1)';
+    } else if (node.classList.contains('generative-sub-node')) {
+        node.style.transform = 'translateY(-3px) scale(1.05)';
     } else {
         node.style.transform = 'translateY(-8px)';
     }
@@ -433,11 +502,11 @@ function toggleAnimations() {
     toggleAnimation.textContent = animationsEnabled ? '⏸️ Pausar Animaciones' : '▶️ Animaciones';
     
     if (!animationsEnabled) {
-        document.querySelectorAll('.node, .sub-node').forEach(node => {
+        document.querySelectorAll('.node, .sub-node, .generative-sub-node').forEach(node => {
             node.style.animationPlayState = 'paused';
         });
     } else {
-        document.querySelectorAll('.node, .sub-node').forEach(node => {
+        document.querySelectorAll('.node, .sub-node, .generative-sub-node').forEach(node => {
             node.style.animationPlayState = 'running';
         });
     }
